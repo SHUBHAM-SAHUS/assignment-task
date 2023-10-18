@@ -30,7 +30,7 @@ const PostCard = ({ userPostsList }) => {
 
             <div className='d-flex flex-wrap gap-4 mt-5 justify-content-between align-items-center'>
                 {userPostsList.map(post => (
-                    <Card key={post.id} className='post-card' onClick={(post) => toggleModal(post)} >
+                    <Card key={post.id} className='post-card' onClick={() => toggleModal(post)} >
                         {/* image  is not avliable  in this api */}
                         <Card.Img variant="top" src={`https://via.placeholder.com/100`} />
                         <Card.Body>
@@ -49,8 +49,8 @@ const PostCard = ({ userPostsList }) => {
                             <span className="close" onClick={toggleModal}>&times;</span>
                         </div>
 
-                        <h2>{postData.title}vgdfhfgh</h2>
-                        <p>{postData.body} gdfghfghtryg rwgtr gre gtreg trgtr ghftrg hftrg hftrg hrt h htry htr hftg hry htry hft hte tr hfry htry htr ghtr hftryt hjty h</p>
+                        <h2>{postData.title}</h2>
+                        <p>{postData.body} </p>
                     </div>
                 </div>
             }

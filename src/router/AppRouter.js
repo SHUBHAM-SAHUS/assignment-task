@@ -5,8 +5,8 @@ import DetailsPage from '../pages/DetailsPage/DetailsPage';
 
 
 
-// import About from './components/About';
-// import Contact from './components/Contact';
+
+
 
 const AppRouter = () => {
     return (

@@ -6,46 +6,54 @@ import axios from 'axios';
 
 const UserList = () => {
 
-  const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [isLoading, setLoading] = useState(false)
 
     useEffect(() => {
         const fetchUsersAndPostCounts = async () => {
+            setLoading(true)
             const fetchedUsers = await axios.get('https://jsonplaceholder.typicode.com/users');
-            
-         
-            const postCountsPromises = fetchedUsers.data.map(user => 
+
+
+            const postCountsPromises = fetchedUsers.data.map(user =>
                 axios.get(`https://jsonplaceholder.typicode.com/posts?userId=${user.id}`)
             );
             const postCountsResults = await Promise.all(postCountsPromises);
-            
+
             const usersWithPostCounts = fetchedUsers.data.map((user, index) => ({
                 ...user,
                 postCount: postCountsResults[index].data.length
             }));
 
             setUsers(usersWithPostCounts);
+            setLoading(false)
         };
 
         fetchUsersAndPostCounts();
     }, []);
 
-  return (
-      <>
-      <div className="container">
-            <h1 className="mb-5 text-center">User List</h1>
-            <ListGroup>
-                {users.map(user => (
-                    <Link key={user.id} to={`/details/${user.id}`} className='text-decoration-none user-list'>
-                        <ListGroup.Item className='d-flex justify-content-between items-center'>
-                            <p className='m-0' >Name: {user.name}</p> 
-                            <p className='m-0' >Post: {user.postCount}</p>
-                        </ListGroup.Item>
-                    </Link>
-                ))}
-            </ListGroup>
-        </div>
-      </>
-  )
+    return (
+        <>
+            <div className="container">
+                <h1 className="mb-5 text-center">User List</h1>
+                {
+                    isLoading ? "Loading..." : <ListGroup>
+                        {users.map(user => (
+                            <Link key={user.id} to={`/details/${user.id}`} className='text-decoration-none user-list'>
+                                <ListGroup.Item className='d-flex justify-content-between items-center'>
+                                    <p className='m-0' >Name: {user.name}</p>
+                                    <p className='m-0' >Post: {user.postCount}</p>
+                                </ListGroup.Item>
+                            </Link>
+                        ))}
+                    </ListGroup>
+                }
+
+
+
+            </div>
+        </>
+    )
 }
 
 export default UserList

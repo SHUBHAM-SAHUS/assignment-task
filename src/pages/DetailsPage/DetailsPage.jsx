@@ -1,31 +1,49 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, } from 'react';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import axios from 'axios'
 import moment from 'moment-timezone';
-
+import { useNavigate } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
 import PostCard from '../../components/PostCard/PostCard';
 
 
+
 const DetailsPage = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [userDetails, setUserDetails] = useState({});
   const [userPosts, setUserPosts] = useState([]);
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState('');
-  const intervalRef = useRef();
-  const [isPaused, setIsPaused] = useState(false);
-  const [isClockRunning, setIsClockRunning] = useState(true);
-  const [timer, setTimer] = useState(null);
-  const [intervalId, setIntervalId] = useState(null);
-  const [currentTime, setCurrentTime] = useState(null);
 
 
-  console.log("country", selectedCountry)
+  const [currentTime, setCurrentTime] = useState(moment());
+  const [isRunning, setIsRunning] = useState(true);
+
+  useEffect(() => {
+    let interval;
+
+    if (isRunning) {
+      interval = setInterval(() => {
+        setCurrentTime(prevTime => prevTime.clone().add(1, 'second'));
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isRunning]);
+
+
+
+
+
+
+
+
 
   useEffect(() => {
     // Fetch user details
@@ -56,34 +74,6 @@ const DetailsPage = () => {
     }
   };
 
-
-
-  console.log('current time', currentTime)
-
-
-
-
-  // for Timer
-
-  //  useEffect(() => {
-  //     if (isClockRunning) {
-  //         const interval = setInterval(() => {
-  //             setCurrentTime(prevTime => new Date(prevTime.getTime() + 1000));
-  //         }, 1000);
-
-  //         Cleanup on unmount
-  //         return () => clearInterval(interval);
-  //     }
-  // }, [isClockRunning, currentTime]);
-
-
-  //  useEffect(() => {
-  //       // Fetch countries list
-  //       axios.get("http://worldtimeapi.org/api/timezone/:area/:location[/:region]")
-  //           .then(response => setCountries(response.data))
-  //           .catch(error => console.error("Error fetching countries", error));
-  //   }, []);
-
   useEffect(() => {
     axios.get("http://worldtimeapi.org/api/timezone")
       .then(response => {
@@ -95,40 +85,21 @@ const DetailsPage = () => {
   }, []);
 
 
-
-
-  const toggleClock = () => {
-    setIsClockRunning(prev => !prev);
+  const handleToggleTime = () => {
+    setIsRunning(prev => !prev); // Toggle the current state
   };
 
 
-  // useEffect(() => {
-  //     intervalRef.current = setInterval(() => {
-  //         if (!isPaused) {
-  //             setCurrentTime(prevTime => new Date(prevTime.getTime() + 1000));
-  //         }
-  //     }, 1000);
 
-  //     return () => {
-  //         clearInterval(intervalRef.current);
-  //     };
-  // }, [isPaused]);
-
-
-
-
-
-  console.log("user details", userPosts)
   return (
     <>
-
-
-      {/* oldd */}
-      <div >
-        <div className='container' >
+   <div >
+        <div className='container mt-2' >
           <Card className='card' >
             <div className=' card-head d-flex justify-content-between align-items-center flex-column flex-sm-row gap-4' >
-              <a href='#' className='back-btn' >Back</a>
+
+              <button className='back-btn' onClick={() => navigate(-1)}>Back</button>
+
               <div>
                 <DropdownButton id="country-dropdown" title={selectedCountry || "Select a Country"}>
                   {countries.map(country => (
@@ -142,8 +113,8 @@ const DetailsPage = () => {
               </div>
               <div className='d-flex justify-content-center align-items-center gap-4' >
                 <p className='m-0 timer' >{currentTime?.format('HH:mm:ss')}</p>
-                <button onClick={toggleClock}>
-                  {isClockRunning ? "Pause" : "Start"}
+                <button onClick={handleToggleTime}>
+                  {isRunning ? "Pause" : "Start"}
                 </button>
               </div>
             </div>
