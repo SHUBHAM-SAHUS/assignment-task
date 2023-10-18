@@ -1,0 +1,133 @@
+.card{
+  border-radius: 24px;
+  border: 1px solid;
+  padding: 24px;
+  
+}
+
+.card-head a.back-btn{
+text-decoration: unset;
+border:1px solid;
+border-radius: 12px;
+padding: 4px 12px;
+color: #fff;
+ background-color: green;
+
+}
+.card-head button{
+  border-radius: 12px;
+  background-color: green;
+  color: #fff;
+  border: unset;
+  padding: 4px 12px;
+  
+}
+.profile-dtl{
+  border: 1px solid;
+  border-radius: 24px;
+  padding: 24px;
+
+}
+
+.post-card{
+  width: 30%;
+}
+
+
+.user-list{
+  margin: 10px 0;
+  
+}
+.user-list .list-group-item{
+  border-radius: 12px;
+  background-color: lightblue;
+}
+.dropdown-menu{
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.card .card-text{
+    display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.card .card-title{
+      display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.card .card-img-top{
+width: 100%;
+max-height: 180px;
+}
+
+.timer{
+  background-color: #000;
+  color: #fff;
+  padding:8px 12px;
+}
+/* The Modal (background) */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+@media only screen and (max-width: 991px) {
+ .post-card{
+  width: 45%;
+}
+}
+
+@media only screen and (max-width: 480px) {
+ .post-card{
+  width: 100%;
+}
+}
+
+
+.dropdown-scroll-wrapper .dropdown-menu {
+    max-height: 300px;
+    overflow-y: auto;
+}
